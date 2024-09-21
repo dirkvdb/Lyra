@@ -1,3 +1,4 @@
 .bin
 .vscode/launch.json
 project-config.jam
+compile_commands.json

@@ -4,7 +4,7 @@
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 # Copyright 2019 Rémi Gastaldi.
-# Copyright 2020-2021 René Ferdinand Rivera Morell.
+# Copyright René Ferdinand Rivera Morell.
 
 # This Meson file provides support for using the Lyra library externally as
 # a standalone project or by embedding in your Meson project tree. To use

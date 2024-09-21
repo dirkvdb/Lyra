@@ -1,4 +1,4 @@
-# Copyright 2019 René Ferdinand Rivera Morell
+# Copyright René Ferdinand Rivera Morell
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -23,6 +23,6 @@ for local test in [ glob *_run_test.cpp ]
 
 compile-fail single_include_test.cpp : : single_include_test_fail ;
 compile single_include_test.cpp
-	: <include>$(BFG_LYRA_DATA)/single_include ;
+	: <include>../data/single_include ;
 
 build-project lib_use_test ;

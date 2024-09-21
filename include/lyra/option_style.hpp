@@ -1,4 +1,4 @@
-// Copyright 2021-2022 René Ferdinand Rivera Morell
+// Copyright René Ferdinand Rivera Morell
 
 #ifndef LYRA_OPTION_STYLE_HPP
 #define LYRA_OPTION_STYLE_HPP

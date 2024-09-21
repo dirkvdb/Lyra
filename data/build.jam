@@ -1,4 +1,4 @@
-# Copyright 2019-2021 René Ferdinand Rivera Morell
+# Copyright René Ferdinand Rivera Morell
 # Distributed under the Boost Software License, Version 1.0.
 # (See accompanying file LICENSE.txt or copy at
 # http://www.boost.org/LICENSE_1_0.txt)
@@ -6,7 +6,14 @@
 import path ;
 import os ;
 
-local lyra_headers = [ SORT [ glob $(BFG_LYRA_INCLUDE)/lyra/*.hpp $(BFG_LYRA_INCLUDE)/lyra/*/*.hpp ] ] ;
+path-constant BFG_LYRA_ROOT : .. ;
+path-constant BFG_LYRA_INCLUDE : ../include ;
+path-constant BFG_LYRA_DATA : ../data ;
+
+local lyra_headers = [ SORT [ glob
+	$(BFG_LYRA_INCLUDE)/lyra/*.hpp
+	$(BFG_LYRA_INCLUDE)/lyra/*/*.hpp
+	] ] ;
 
 make lyra.hpp
 	: $(BFG_LYRA_INCLUDE)/lyra/lyra.hpp
@@ -49,7 +56,7 @@ local meson_build_header_join_str = ",
 # file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
 #
 # Copyright 2019 Rémi Gastaldi.
-# Copyright 2020-2021 René Ferdinand Rivera Morell.
+# Copyright René Ferdinand Rivera Morell.
 
 # This Meson file provides support for using the Lyra library externally as
 # a standalone project or by embedding in your Meson project tree. To use

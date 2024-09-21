@@ -1,4 +1,4 @@
-// Copyright 2018-2022 René Ferdinand Rivera Morell
+// Copyright René Ferdinand Rivera Morell
 // Copyright 2017 Two Blue Cubes Ltd. All rights reserved.
 //
 // Distributed under the Boost Software License, Version 1.0. (See accompanying
@@ -7,13 +7,19 @@
 #ifndef LYRA_OPT_HPP
 #define LYRA_OPT_HPP
 
+#include "lyra/detail/bound.hpp"
 #include "lyra/detail/print.hpp"
+#include "lyra/detail/tokens.hpp"
 #include "lyra/detail/trait_utils.hpp"
+#include "lyra/option_style.hpp"
 #include "lyra/parser.hpp"
-#include "lyra/val.hpp"
+#include "lyra/parser_result.hpp"
 
+#include <cstddef>
 #include <memory>
 #include <string>
+#include <type_traits>
+#include <vector>
 
 namespace lyra {
 
@@ -228,15 +234,15 @@ class opt : public bound_parser<opt>
 	bool is_match(
 		std::string const & opt_name, const option_style & style) const
 	{
-		auto opt_normalized = normalise_opt(opt_name, style);
+		auto opt_normalized = normalize_opt(opt_name, style);
 		for (auto const & name : opt_names)
 		{
-			if (normalise_opt(name, style) == opt_normalized) return true;
+			if (normalize_opt(name, style) == opt_normalized) return true;
 		}
 		return false;
 	}
 
-	std::string normalise_opt(
+	std::string normalize_opt(
 		std::string const & opt_name, const option_style & style) const
 	{
 		if (detail::token_iterator::is_prefixed(

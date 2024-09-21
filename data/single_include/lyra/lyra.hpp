@@ -1,4 +1,4 @@
-// Copyright 2018-2022 René Ferdinand Rivera Morell
+// Copyright René Ferdinand Rivera Morell
 // Copyright 2021 Max Ferger
 // Copyright 2017 Two Blue Cubes Ltd. All rights reserved.
 //
@@ -699,7 +699,12 @@ inline parser_result invokeLambda(L const & lambda, std::string const & arg)
 }} // namespace lyra::detail
 
 #endif
+
+#include <cstddef>
+#include <memory>
 #include <string>
+#include <type_traits>
+#include <vector>
 
 namespace lyra { namespace detail {
 
@@ -3997,8 +4002,11 @@ inline command & command::brief_help(bool brief)
 #define LYRA_OPT_HPP
 
 
+#include <cstddef>
 #include <memory>
 #include <string>
+#include <type_traits>
+#include <vector>
 
 namespace lyra {
 
@@ -4206,15 +4214,15 @@ class opt : public bound_parser<opt>
 	bool is_match(
 		std::string const & opt_name, const option_style & style) const
 	{
-		auto opt_normalized = normalise_opt(opt_name, style);
+		auto opt_normalized = normalize_opt(opt_name, style);
 		for (auto const & name : opt_names)
 		{
-			if (normalise_opt(name, style) == opt_normalized) return true;
+			if (normalize_opt(name, style) == opt_normalized) return true;
 		}
 		return false;
 	}
 
-	std::string normalise_opt(
+	std::string normalize_opt(
 		std::string const & opt_name, const option_style & style) const
 	{
 		if (detail::token_iterator::is_prefixed(

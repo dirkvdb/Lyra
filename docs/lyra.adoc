@@ -1,5 +1,5 @@
 = Lyra
-:copyright: Copyright 2019-2022 René Ferdinand Rivera Morell
+:copyright: Copyright René Ferdinand Rivera Morell
 :author: René Ferdinand Rivera Morell
 :email: grafikrobot@gmail.com
 :revnumber: 1.6.1
