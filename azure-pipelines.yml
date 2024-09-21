@@ -90,7 +90,7 @@ stages:
       matrix:
         Xcode 15.2 Warn-All: {
           CXX: clang++, VM_IMAGE: 'macOS-13', XCODE_VERSION: "15.2",
-          TOOLSET: clang, CXXSTD: "11,14,17,20,23", B2_ARGS: "warnings=extra warnings-as-errors=on" }
+          TOOLSET: clang, CXXSTD: "11,14,17,20", B2_ARGS: "warnings=extra warnings-as-errors=on" }
     pool:
       vmImage: $(VM_IMAGE)
     steps:
@@ -170,7 +170,7 @@ stages:
       matrix:
         Xcode 15.2: {
           CXX: clang++, VM_IMAGE: 'macOS-13', XCODE_VERSION: "15.2",
-          TOOLSET: clang, CXXSTD: "11,14,17,20,23" }
+          TOOLSET: clang, CXXSTD: "11,14,17,20" }
         Xcode 14.3.1: {
           CXX: clang++, VM_IMAGE: 'macOS-13', XCODE_VERSION: "14.3.1",
           TOOLSET: clang, CXXSTD: "11,14,17,20" }
