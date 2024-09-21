@@ -8,6 +8,12 @@
 #define LYRA_HELP_HPP
 
 #include "lyra/opt.hpp"
+#include "lyra/option_style.hpp"
+#include "lyra/parser.hpp"
+#include "lyra/parser_result.hpp"
+
+#include <memory>
+#include <string>
 
 namespace lyra {
 

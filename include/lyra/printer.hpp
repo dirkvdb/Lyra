@@ -6,6 +6,7 @@
 #ifndef LYRA_PRINTER_HPP
 #define LYRA_PRINTER_HPP
 
+#include <cstddef>
 #include <memory>
 #include <ostream>
 #include <string>

@@ -7,15 +7,25 @@
 #ifndef LYRA_CLI_HPP
 #define LYRA_CLI_HPP
 
+#include "lyra/args.hpp"
 #include "lyra/arguments.hpp"
 #include "lyra/detail/deprecated_parser_customization.hpp"
 #include "lyra/detail/from_string.hpp"
 #include "lyra/detail/print.hpp"
+#include "lyra/detail/tokens.hpp"
+#include "lyra/detail/trait_utils.hpp"
 #include "lyra/exe_name.hpp"
 #include "lyra/group.hpp"
 #include "lyra/option_style.hpp"
+#include "lyra/parser.hpp"
+#include "lyra/parser_result.hpp"
 
+#include <cstddef>
+#include <memory>
+#include <string>
 #include <type_traits>
+#include <utility>
+#include <vector>
 
 namespace lyra {
 
@@ -97,7 +107,7 @@ class cli : protected arguments
 			std::vector<T> converted_value;
 			if (parser_ref)
 			{
-				for (size_t i = 0; i < parser_ref->get_value_count(); ++i)
+				for (std::size_t i = 0; i < parser_ref->get_value_count(); ++i)
 				{
 					T v;
 					if (detail::from_string(parser_ref->get_value(i), v))
@@ -136,7 +146,7 @@ class cli : protected arguments
 	}
 	parse_result parse(args const & args, const option_style & style) const;
 
-	// Backward compatability parse() that takes `parser_customization` and
+	// Backward compatibility parse() that takes `parser_customization` and
 	// converts to `option_style`.
 	[[deprecated]] parse_result parse(
 		args const & args, const parser_customization & customize) const

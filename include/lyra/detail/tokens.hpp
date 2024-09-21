@@ -9,6 +9,8 @@
 
 #include "lyra/option_style.hpp"
 
+#include <cstddef>
+#include <iterator>
 #include <string>
 #include <vector>
 

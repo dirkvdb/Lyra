@@ -3,7 +3,9 @@
 #ifndef LYRA_OPTION_STYLE_HPP
 #define LYRA_OPTION_STYLE_HPP
 
+#include <cstddef>
 #include <string>
+#include <utility>
 
 namespace lyra {
 

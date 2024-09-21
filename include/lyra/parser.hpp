@@ -8,21 +8,20 @@
 #ifndef LYRA_PARSER_HPP
 #define LYRA_PARSER_HPP
 
-#include "lyra/args.hpp"
 #include "lyra/detail/bound.hpp"
 #include "lyra/detail/choices.hpp"
-#include "lyra/detail/from_string.hpp"
 #include "lyra/detail/result.hpp"
 #include "lyra/detail/tokens.hpp"
 #include "lyra/detail/trait_utils.hpp"
 #include "lyra/option_style.hpp"
 #include "lyra/parser_result.hpp"
 #include "lyra/printer.hpp"
-#include "lyra/val.hpp"
 
+#include <cstddef>
 #include <memory>
 #include <string>
 #include <type_traits>
+#include <vector>
 
 namespace lyra {
 
@@ -33,7 +32,7 @@ class parse_state
 	public:
 	parse_state(parser_result_type type,
 		token_iterator const & remaining_tokens,
-		size_t parsed_tokens = 0)
+		std::size_t parsed_tokens = 0)
 		: result_type(type)
 		, tokens(remaining_tokens)
 	{
@@ -51,12 +50,12 @@ class parse_state
 
 struct parser_cardinality
 {
-	size_t minimum = 0;
-	size_t maximum = 0;
+	std::size_t minimum = 0;
+	std::size_t maximum = 0;
 
 	parser_cardinality() = default;
 
-	parser_cardinality(size_t a, size_t b)
+	parser_cardinality(std::size_t a, std::size_t b)
 		: minimum(a)
 		, maximum(b)
 	{}
@@ -77,17 +76,17 @@ struct parser_cardinality
 		minimum = 0;
 		maximum = 1;
 	}
-	void required(size_t n = 1)
+	void required(std::size_t n = 1)
 	{
 		minimum = n;
 		maximum = n;
 	}
-	void counted(size_t n)
+	void counted(std::size_t n)
 	{
 		minimum = n;
 		maximum = n;
 	}
-	void bounded(size_t n, size_t m)
+	void bounded(std::size_t n, std::size_t m)
 	{
 		minimum = n;
 		maximum = m;
@@ -167,8 +166,8 @@ class parser
 		if (is_named(n)) return this;
 		return nullptr;
 	}
-	virtual size_t get_value_count() const { return 0; }
-	virtual std::string get_value(size_t i) const
+	virtual std::size_t get_value_count() const { return 0; }
+	virtual std::string get_value(std::size_t i) const
 	{
 		(void)i;
 		return "";
@@ -184,7 +183,8 @@ class parser
 		print_help_text_summary(p, style);
 		print_help_text_details(p, style);
 	}
-	virtual void print_help_text_summary(printer & p, const option_style & style) const
+	virtual void print_help_text_summary(
+		printer & p, const option_style & style) const
 	{
 		std::string usage_test = get_usage_text(style);
 		if (!usage_test.empty())
@@ -193,7 +193,8 @@ class parser
 		std::string description_test = get_description_text(style);
 		if (!description_test.empty()) p.paragraph(get_description_text(style));
 	}
-	virtual void print_help_text_details(printer & p, const option_style & style) const
+	virtual void print_help_text_details(
+		printer & p, const option_style & style) const
 	{
 		p.heading("OPTIONS, ARGUMENTS:");
 		for (auto const & cols : get_help_text(style))
@@ -358,9 +359,9 @@ class bound_parser : public composable_parser<Derived>
 	Derived & help(const std::string & text);
 	Derived & operator()(std::string const & description);
 	Derived & optional();
-	Derived & required(size_t n = 1);
-	Derived & cardinality(size_t n);
-	Derived & cardinality(size_t n, size_t m);
+	Derived & required(std::size_t n = 1);
+	Derived & cardinality(std::size_t n);
+	Derived & cardinality(std::size_t n, std::size_t m);
 	detail::parser_cardinality cardinality() const override
 	{
 		return m_cardinality;
@@ -388,11 +389,11 @@ class bound_parser : public composable_parser<Derived>
 	{
 		return n == m_hint;
 	}
-	virtual size_t get_value_count() const override
+	virtual std::size_t get_value_count() const override
 	{
 		return m_ref->get_value_count();
 	}
-	virtual std::string get_value(size_t i) const override
+	virtual std::string get_value(std::size_t i) const override
 	{
 		return m_ref->get_value(i);
 	}
@@ -431,7 +432,7 @@ template <typename Derived>
 template <typename Reference>
 bound_parser<Derived>::bound_parser(Reference & ref, std::string const & hint)
 	: bound_parser(
-		std::make_shared<detail::BoundValueRef<Reference>>(ref), hint)
+		  std::make_shared<detail::BoundValueRef<Reference>>(ref), hint)
 {}
 
 template <typename Derived>
@@ -509,7 +510,7 @@ Derived & bound_parser<Derived>::optional()
 [source]
 ----
 template <typename Derived>
-Derived& bound_parser<Derived>::required(size_t n);
+Derived& bound_parser<Derived>::required(std::size_t n);
 ----
 
 Specifies that the argument needs to given the number of `n` times
@@ -517,7 +518,7 @@ Specifies that the argument needs to given the number of `n` times
 
 end::reference[] */
 template <typename Derived>
-Derived & bound_parser<Derived>::required(size_t n)
+Derived & bound_parser<Derived>::required(std::size_t n)
 {
 	if (m_ref->isContainer())
 		return this->cardinality(1, 0);
@@ -533,10 +534,10 @@ Derived & bound_parser<Derived>::required(size_t n)
 [source]
 ----
 template <typename Derived>
-Derived& bound_parser<Derived>::cardinality(size_t n);
+Derived& bound_parser<Derived>::cardinality(std::size_t n);
 
 template <typename Derived>
-Derived& bound_parser<Derived>::cardinality(size_t n, size_t m);
+Derived& bound_parser<Derived>::cardinality(std::size_t n, std::size_t m);
 ----
 
 Specifies the number of times the argument can and needs to appear in the list
@@ -546,14 +547,14 @@ inclusive.
 
 end::reference[] */
 template <typename Derived>
-Derived & bound_parser<Derived>::cardinality(size_t n)
+Derived & bound_parser<Derived>::cardinality(std::size_t n)
 {
 	m_cardinality = { n, n };
 	return static_cast<Derived &>(*this);
 }
 
 template <typename Derived>
-Derived & bound_parser<Derived>::cardinality(size_t n, size_t m)
+Derived & bound_parser<Derived>::cardinality(std::size_t n, std::size_t m)
 {
 	m_cardinality = { n, m };
 	return static_cast<Derived &>(*this);

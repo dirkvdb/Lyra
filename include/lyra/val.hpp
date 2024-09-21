@@ -7,7 +7,8 @@
 #define LYRA_VAL_HPP
 
 #include "lyra/detail/bound.hpp"
-#include <memory>
+
+#include <string>
 
 namespace lyra {
 

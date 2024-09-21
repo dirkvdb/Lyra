@@ -9,6 +9,7 @@
 
 #include "lyra/detail/trait_utils.hpp"
 
+#include <cctype>
 #include <sstream>
 #include <string>
 #include <type_traits>
@@ -147,7 +148,8 @@ inline bool from_string(S const & source, bool & target)
 {
 	std::string srcLC;
 	to_string(source, srcLC);
-	for (std::string::value_type & c : srcLC) c = ::tolower(c);
+	for (std::string::value_type & c : srcLC)
+		c = static_cast<std::string::value_type>(std::tolower(c));
 	if (srcLC == "y" || srcLC == "1" || srcLC == "true" || srcLC == "yes"
 		|| srcLC == "on")
 		target = true;

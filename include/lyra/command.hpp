@@ -8,7 +8,12 @@
 
 #include "lyra/group.hpp"
 #include "lyra/literal.hpp"
+#include "lyra/option_style.hpp"
+#include "lyra/parser.hpp"
+#include "lyra/printer.hpp"
+
 #include <functional>
+#include <memory>
 #include <string>
 
 namespace lyra {
@@ -38,7 +43,7 @@ lyra::command c = lyra::group()
 lyra::group & g = c.get<lyra::group>(1);
 ----
 
-I.e. it's conposed of a `literal` followed by the rest of the command arguments.
+I.e. it's composed of a `literal` followed by the rest of the command arguments.
 
 Is-a <<lyra_group>>.
 
@@ -186,7 +191,7 @@ template <typename P>
 command & command::operator|=(P const & p);
 ----
 
-Adds the given argument parser to the considered arguments for this `comand`.
+Adds the given argument parser to the considered arguments for this `command`.
 The argument is added to the sub-group argument instead of this one. Hence it
 has the effect of adding arguments *after* the command name.
 
@@ -204,7 +209,7 @@ command & command::operator|=(P const & p)
 }
 
 /* tag::reference[]
-[#lyra_command_abrief_help]
+[#lyra_command_brief_help]
 === `lyra::command::brief_help`
 
 [source]
@@ -223,7 +228,6 @@ inline command & command::brief_help(bool brief)
 	expanded_help_details = !brief;
 	return *this;
 }
-
 
 } // namespace lyra
 

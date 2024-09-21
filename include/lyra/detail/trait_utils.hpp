@@ -17,8 +17,9 @@ template <class F, class... Args>
 struct is_callable
 {
 	template <class U>
-	static auto test(U * p)
-		-> decltype((*p)(std::declval<Args>()...), void(), std::true_type());
+	static auto test(U * p) -> decltype((*p)(std::declval<Args>()...),
+								void(),
+								std::true_type());
 
 	template <class U>
 	static auto test(...) -> decltype(std::false_type());
@@ -29,9 +30,8 @@ struct is_callable
 template <class T>
 struct remove_cvref
 {
-	typedef
-		typename std::remove_cv<typename std::remove_reference<T>::type>::type
-			type;
+	using type =
+		typename std::remove_cv<typename std::remove_reference<T>::type>::type;
 };
 
 // Checks that F can be called, with an unspecified set of arguments.
@@ -42,8 +42,8 @@ template <class F>
 struct is_invocable
 {
 	template <class U>
-	static auto test(U * p)
-		-> decltype((&U::operator()), void(), std::true_type());
+	static auto test(
+		U * p) -> decltype((&U::operator()), void(), std::true_type());
 
 	template <class U>
 	static auto test(...) -> decltype(std::false_type());

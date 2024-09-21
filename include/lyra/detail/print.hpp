@@ -23,7 +23,7 @@ constexpr bool is_debug = LYRA_DEBUG;
 template <typename T>
 std::string to_string(T && t)
 {
-	return std::string(std::move(t));
+	return std::string(std::forward<T>(t));
 }
 
 using std::to_string;

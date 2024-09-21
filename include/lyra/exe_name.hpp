@@ -9,8 +9,12 @@
 
 #include "lyra/detail/bound.hpp"
 #include "lyra/detail/tokens.hpp"
+#include "lyra/option_style.hpp"
 #include "lyra/parser.hpp"
 #include "lyra/parser_result.hpp"
+
+#include <memory>
+#include <string>
 
 namespace lyra {
 

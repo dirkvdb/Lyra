@@ -11,10 +11,13 @@
 #include "lyra/cli.hpp"
 #include "lyra/help.hpp"
 #include "lyra/opt.hpp"
+#include "lyra/option_style.hpp"
 #include "lyra/parser.hpp"
 #include "lyra/val.hpp"
 
+#include <initializer_list>
 #include <iostream>
+#include <string>
 
 namespace lyra {
 

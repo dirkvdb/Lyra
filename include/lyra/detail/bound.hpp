@@ -183,7 +183,7 @@ struct BoundVal : BoundValueRef<T>
 		, value(v)
 	{}
 
-	BoundVal(BoundVal && other)
+	BoundVal(BoundVal && other) noexcept
 		: BoundValueRef<T>(value)
 		, value(std::move(other.value))
 	{}

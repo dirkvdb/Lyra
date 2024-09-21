@@ -8,13 +8,18 @@
 #define LYRA_ARGUMENTS_HPP
 
 #include "lyra/detail/print.hpp"
+#include "lyra/detail/tokens.hpp"
 #include "lyra/detail/trait_utils.hpp"
-#include "lyra/exe_name.hpp"
+#include "lyra/option_style.hpp"
 #include "lyra/parser.hpp"
+#include "lyra/parser_result.hpp"
 #include "lyra/printer.hpp"
 
-#include <functional>
+#include <cstddef>
+#include <memory>
+#include <string>
 #include <type_traits>
+#include <vector>
 
 namespace lyra {
 
@@ -96,7 +101,7 @@ class arguments : public parser
 
 	// Access.
 	template <typename T>
-	T & get(size_t i);
+	T & get(std::size_t i);
 
 	// Internal..
 
@@ -192,11 +197,11 @@ class arguments : public parser
 		struct ParserInfo
 		{
 			parser const * parser_p = nullptr;
-			size_t count = 0;
+			std::size_t count = 0;
 		};
 		std::vector<ParserInfo> parser_info(parsers.size());
 		{
-			size_t i = 0;
+			std::size_t i = 0;
 			for (auto const & p : parsers) parser_info[i++].parser_p = p.get();
 		}
 
@@ -287,11 +292,11 @@ class arguments : public parser
 		struct ParserInfo
 		{
 			parser const * parser_p = nullptr;
-			size_t count = 0;
+			std::size_t count = 0;
 		};
 		std::vector<ParserInfo> parser_info(parsers.size());
 		{
-			size_t i = 0;
+			std::size_t i = 0;
 			for (auto const & p : parsers) parser_info[i++].parser_p = p.get();
 		}
 
@@ -299,7 +304,7 @@ class arguments : public parser
 			detail::parse_state(parser_result_type::matched, tokens));
 
 		// Sequential parsing means we walk through the given parsers in order
-		// and exhaust the tokens as we match persers.
+		// and exhaust the tokens as we match parsers.
 		for (std::size_t parser_i = 0; parser_i < parsers.size(); ++parser_i)
 		{
 			auto & parse_info = parser_info[parser_i];
@@ -535,14 +540,14 @@ inline arguments & arguments::inclusive()
 [source]
 ----
 template <typename T>
-T & arguments::get(size_t i);
+T & arguments::get(std::size_t i);
 ----
 
-Get a modifyable reference to one of the parsers specified.
+Get a modifiable reference to one of the parsers specified.
 
 end::reference[] */
 template <typename T>
-T & arguments::get(size_t i)
+T & arguments::get(std::size_t i)
 {
 	return static_cast<T &>(*parsers.at(i));
 }

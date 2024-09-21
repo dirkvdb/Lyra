@@ -7,9 +7,14 @@
 #ifndef LYRA_ARG_HPP
 #define LYRA_ARG_HPP
 
+#include "lyra/detail/bound.hpp"
 #include "lyra/detail/print.hpp"
+#include "lyra/detail/tokens.hpp"
+#include "lyra/option_style.hpp"
 #include "lyra/parser.hpp"
+#include "lyra/parser_result.hpp"
 
+#include <cstddef>
 #include <string>
 
 namespace lyra {
@@ -30,7 +35,7 @@ class arg : public bound_parser<arg>
 	public:
 	using bound_parser::bound_parser;
 
-	virtual std::string get_usage_text(const option_style &) const override
+	std::string get_usage_text(const option_style &) const override
 	{
 		std::string text;
 		if (!m_hint.empty())
@@ -38,11 +43,10 @@ class arg : public bound_parser<arg>
 			auto c = cardinality();
 			if (c.is_required())
 			{
-				for (size_t i = 0; i < c.minimum; ++i)
+				for (std::size_t i = 0; i < c.minimum; ++i)
 					(((text += (i > 0 ? " " : "")) += "<") += m_hint) += ">";
 				if (c.is_unbounded())
-					(((text += (c.is_required() ? " " : "")) += "[<")
-						+= m_hint)
+					(((text += (c.is_required() ? " " : "")) += "[<") += m_hint)
 						+= ">...]";
 			}
 			else if (c.is_unbounded())
@@ -57,7 +61,7 @@ class arg : public bound_parser<arg>
 		return text;
 	}
 
-	virtual help_text get_help_text(const option_style & style) const override
+	help_text get_help_text(const option_style & style) const override
 	{
 		return { { get_usage_text(style), m_description } };
 	}

@@ -10,8 +10,6 @@
 #include "lyra/detail/from_string.hpp"
 #include "lyra/parser_result.hpp"
 
-#include <string>
-
 namespace lyra { namespace detail {
 
 template <typename S, typename T>

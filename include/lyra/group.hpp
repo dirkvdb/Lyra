@@ -8,7 +8,14 @@
 
 #include "lyra/arguments.hpp"
 #include "lyra/detail/print.hpp"
+#include "lyra/detail/tokens.hpp"
+#include "lyra/option_style.hpp"
+#include "lyra/parser.hpp"
+#include "lyra/parser_result.hpp"
+
+#include <cstddef>
 #include <functional>
+#include <memory>
 
 namespace lyra {
 
@@ -33,7 +40,7 @@ class group : public arguments
 	group(const group & other);
 	explicit group(const std::function<void(const group &)> & f);
 
-	virtual bool is_group() const override { return true; }
+	bool is_group() const override { return true; }
 
 	parse_result parse(detail::token_iterator const & tokens,
 		const option_style & style) const override
@@ -64,9 +71,9 @@ class group : public arguments
 	}
 
 	group & optional();
-	group & required(size_t n = 1);
-	group & cardinality(size_t n);
-	group & cardinality(size_t n, size_t m);
+	group & required(std::size_t n = 1);
+	group & cardinality(std::size_t n);
+	group & cardinality(std::size_t n, std::size_t m);
 	detail::parser_cardinality cardinality() const override
 	{
 		return m_cardinality;
@@ -168,14 +175,14 @@ inline group & group::optional()
 
 [source]
 ----
-group & group::required(size_t n);
+group & group::required(std::size_t n);
 ----
 
 Specifies that the argument needs to given the number of `n` times
 (defaults to *1*).
 
 end::reference[] */
-inline group & group::required(size_t n)
+inline group & group::required(std::size_t n)
 {
 	m_cardinality.required(n);
 	return *this;
@@ -188,8 +195,8 @@ inline group & group::required(size_t n)
 
 [source]
 ----
-group & group::cardinality(size_t n);
-group & group::cardinality(size_t n, size_t m);
+group & group::cardinality(std::size_t n);
+group & group::cardinality(std::size_t n, std::size_t m);
 ----
 
 Specifies the number of times the argument can and needs to appear in the list
@@ -198,12 +205,12 @@ the second form it specifies that the argument can appear from `n` to `m` times
 inclusive.
 
 end::reference[] */
-inline group & group::cardinality(size_t n)
+inline group & group::cardinality(std::size_t n)
 {
 	m_cardinality.counted(n);
 	return *this;
 }
-inline group & group::cardinality(size_t n, size_t m)
+inline group & group::cardinality(std::size_t n, std::size_t m)
 {
 	m_cardinality.bounded(n, m);
 	return *this;

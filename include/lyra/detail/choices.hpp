@@ -8,7 +8,6 @@
 #define LYRA_DETAIL_CHOICES_HPP
 
 #include "lyra/detail/from_string.hpp"
-#include "lyra/detail/result.hpp"
 #include "lyra/detail/unary_lambda_traits.hpp"
 #include "lyra/parser_result.hpp"
 #include <initializer_list>

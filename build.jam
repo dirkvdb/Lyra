@@ -23,13 +23,13 @@ project /bfg_lyra ;
 
 if [ project.is-jamroot-module $(__name__) ]
 {
-    local attributes = [ project.attributes $(__name__) ] ;
-    $(attributes).set "build-dir" : .bin ;
+	local attributes = [ project.attributes $(__name__) ] ;
+	$(attributes).set "build-dir" : .bin ;
 }
 
 alias bfg_lyra
-    : usage-requirements
-        <include>include ;
+	: usage-requirements
+		<include>include ;
 
 explicit
 	[ alias all : data docs examples tests ]
