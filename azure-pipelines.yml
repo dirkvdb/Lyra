@@ -179,12 +179,6 @@ stages:
         Xcode 13.4.1: {
           CXX: clang++, VM_IMAGE: 'macOS-12', XCODE_VERSION: "13.4.1",
           TOOLSET: clang, CXXSTD: "11,14,17,20" }
-        Xcode 12.5.1: {
-          CXX: clang++, VM_IMAGE: 'macOS-11', XCODE_VERSION: "12.5.1",
-          TOOLSET: clang, CXXSTD: "11,14,17,2a" }
-        Xcode 11.7: {
-          CXX: clang++, VM_IMAGE: 'macOS-11', XCODE_VERSION: "11.7",
-          TOOLSET: clang, CXXSTD: "11,14,17,2a" }
     pool:
       vmImage: $(VM_IMAGE)
     steps:
@@ -207,7 +201,9 @@ stages:
   - job: 'MinGW'
     strategy:
       matrix:
-        MinGW 12.2.0: { MINGW_VERSION: '12.2.0', MINGW_RT: 'rt_v10-rev0', CXXSTD: "11,14,17,20" }
+        MinGW 14.2.0: { MINGW_VERSION: '14.2.0', MINGW_RT: 'rt_v12-rev0', CXXSTD: "11,14,17,20,23" }
+        MinGW 13.2.0: { MINGW_VERSION: '13.2.0', MINGW_RT: 'rt_v11-rev1', CXXSTD: "11,14,17,20" }
+        MinGW 12.2.0: { MINGW_VERSION: '12.2.0', MINGW_RT: 'rt_v10-rev2', CXXSTD: "11,14,17,20" }
         MinGW 11.2.0: { MINGW_VERSION: '11.2.0', MINGW_RT: 'rt_v9-rev1', CXXSTD: "11,14,17,20" }
     pool:
       vmImage: 'windows-latest'

@@ -8,6 +8,7 @@ steps:
     archiveFilePatterns: $(Build.SourcesDirectory)/../mingw.7z
     destinationFolder: C:/
     cleanDestinationFolder: false
+    overwriteExistingFiles: true
   displayName: Extract MinGW
 - script: |
     cd %BUILD_SOURCESDIRECTORY%/..
@@ -18,6 +19,7 @@ steps:
     archiveFilePatterns: $(Build.SourcesDirectory)/../b2.zip
     destinationFolder: $(Build.SourcesDirectory)/..
     cleanDestinationFolder: false
+    overwriteExistingFiles: true
   displayName: Extract B2
 - script: |
     echo using gcc ^: ^: ^"C:/mingw64/bin/g++.exe^"  ^; > %HOMEDRIVE%%HOMEPATH%/user-config.jam
