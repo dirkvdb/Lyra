@@ -222,7 +222,7 @@ class opt : public bound_parser<opt>
 		return bound_parser::validate();
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<opt>(this);
 	}
