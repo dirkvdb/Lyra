@@ -204,7 +204,6 @@ stages:
         MinGW 14.2.0: { MINGW_VERSION: '14.2.0', MINGW_RT: 'rt_v12-rev0', CXXSTD: "11,14,17,20,23" }
         MinGW 13.2.0: { MINGW_VERSION: '13.2.0', MINGW_RT: 'rt_v11-rev1', CXXSTD: "11,14,17,20" }
         MinGW 12.2.0: { MINGW_VERSION: '12.2.0', MINGW_RT: 'rt_v10-rev2', CXXSTD: "11,14,17,20" }
-        MinGW 11.2.0: { MINGW_VERSION: '11.2.0', MINGW_RT: 'rt_v9-rev1', CXXSTD: "11,14,17,20" }
     pool:
       vmImage: 'windows-latest'
     steps:
