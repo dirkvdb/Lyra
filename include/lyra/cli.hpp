@@ -161,7 +161,7 @@ class cli : protected arguments
 	using arguments::parse;
 	using arguments::get_named;
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return std::unique_ptr<parser>(new cli(*this));
 	}
@@ -169,8 +169,7 @@ class cli : protected arguments
 	protected:
 	mutable exe_name m_exeName;
 
-	virtual std::string get_usage_text(
-		const option_style & style) const override
+	std::string get_usage_text(const option_style & style) const override
 	{
 		if (!m_exeName.name().empty())
 			return m_exeName.name() + " " + arguments::get_usage_text(style);

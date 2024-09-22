@@ -47,13 +47,12 @@ class help : public opt
 
 	help & description(const std::string & text);
 
-	virtual std::string get_description_text(
-		const option_style &) const override
+	std::string get_description_text(const option_style &) const override
 	{
 		return description_text;
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<help>(this);
 	}

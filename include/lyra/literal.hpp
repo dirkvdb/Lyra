@@ -37,32 +37,28 @@ class literal : public parser
 	literal & operator()(std::string const & help_description_text);
 
 	// Singular argument allowed and required.
-	virtual detail::parser_cardinality cardinality() const override
-	{
-		return { 1, 1 };
-	}
+	detail::parser_cardinality cardinality() const override { return { 1, 1 }; }
 
 	// Internal.
 
-	virtual std::string get_usage_text(const option_style &) const override
+	std::string get_usage_text(const option_style &) const override
 	{
 		return name;
 	}
 
-	virtual std::string get_description_text(
-		const option_style &) const override
+	std::string get_description_text(const option_style &) const override
 	{
 		return description;
 	}
 
-	virtual help_text get_help_text(const option_style &) const override
+	help_text get_help_text(const option_style &) const override
 	{
 		return { { name, description } };
 	}
 
 	using parser::parse;
 
-	virtual parse_result parse(detail::token_iterator const & tokens,
+	parse_result parse(detail::token_iterator const & tokens,
 		const option_style &) const override
 	{
 		auto validationResult = validate();
@@ -83,7 +79,7 @@ class literal : public parser
 		}
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<literal>(this);
 	}

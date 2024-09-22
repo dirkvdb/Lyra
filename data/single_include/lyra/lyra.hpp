@@ -607,8 +607,8 @@ struct BoundValueRef : BoundValueRefBase
 		return parse_string(arg, m_ref);
 	}
 
-	virtual size_t get_value_count() const override { return 1; }
-	virtual std::string get_value(size_t i) const override
+	size_t get_value_count() const override { return 1; }
+	std::string get_value(size_t i) const override
 	{
 		if (i == 0)
 		{
@@ -639,8 +639,8 @@ struct BoundValueRef<std::vector<T>> : BoundValueRefBase
 		return str_result;
 	}
 
-	virtual size_t get_value_count() const override { return m_ref.size(); }
-	virtual std::string get_value(size_t i) const override
+	size_t get_value_count() const override { return m_ref.size(); }
+	std::string get_value(size_t i) const override
 	{
 		if (i < m_ref.size())
 		{
@@ -666,8 +666,8 @@ struct BoundFlagRef : BoundFlagRefBase
 		return parser_result::ok(parser_result_type::matched);
 	}
 
-	virtual size_t get_value_count() const override { return 1; }
-	virtual std::string get_value(size_t i) const override
+	size_t get_value_count() const override { return 1; }
+	std::string get_value(size_t i) const override
 	{
 		if (i == 0) return m_ref ? "true" : "false";
 		return "";
@@ -1462,19 +1462,19 @@ class ostream_printer : public printer
 	explicit ostream_printer(std::ostream & os_)
 		: os(os_)
 	{}
-	virtual printer & heading(const std::string & txt) override
+	printer & heading(const std::string & txt) override
 	{
 		os << txt << "\n";
 		return *this;
 	}
-	virtual printer & paragraph(
+	printer & paragraph(
 		const std::string & txt, std::size_t indent = 0) override
 	{
 		const std::string indent_str(indent, ' ');
 		os << indent_str << txt << "\n\n";
 		return *this;
 	}
-	virtual printer & option(const std::string & opt,
+	printer & option(const std::string & opt,
 		const std::string & description,
 		std::size_t indent = 0) override
 	{
@@ -1862,20 +1862,17 @@ class bound_parser : public composable_parser<Derived>
 	template <typename T, std::size_t N>
 	Derived & choices(const T (&choice_values)[N]);
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<Derived>(this);
 	}
 
-	virtual bool is_named(const std::string & n) const override
-	{
-		return n == m_hint;
-	}
-	virtual std::size_t get_value_count() const override
+	bool is_named(const std::string & n) const override { return n == m_hint; }
+	std::size_t get_value_count() const override
 	{
 		return m_ref->get_value_count();
 	}
-	virtual std::string get_value(std::size_t i) const override
+	std::string get_value(std::size_t i) const override
 	{
 		return m_ref->get_value(i);
 	}
@@ -2317,8 +2314,7 @@ class arguments : public parser
 	T & get(std::size_t i);
 
 
-	virtual std::string get_usage_text(
-		const option_style & style) const override
+	std::string get_usage_text(const option_style & style) const override
 	{
 		std::string text;
 		for (auto const & p : parsers)
@@ -2340,8 +2336,7 @@ class arguments : public parser
 		return text;
 	}
 
-	virtual std::string get_description_text(
-		const option_style & style) const override
+	std::string get_description_text(const option_style & style) const override
 	{
 		std::string text;
 		for (auto const & p : parsers)
@@ -2357,7 +2352,7 @@ class arguments : public parser
 		return text;
 	}
 
-	virtual help_text get_help_text(const option_style & style) const override
+	help_text get_help_text(const option_style & style) const override
 	{
 		help_text text;
 		for (auto const & p : parsers)
@@ -2368,12 +2363,9 @@ class arguments : public parser
 		return text;
 	}
 
-	virtual detail::parser_cardinality cardinality() const override
-	{
-		return { 0, 0 };
-	}
+	detail::parser_cardinality cardinality() const override { return { 0, 0 }; }
 
-	virtual result validate() const override
+	result validate() const override
 	{
 		for (auto const & p : parsers)
 		{
@@ -2547,7 +2539,7 @@ class arguments : public parser
 		return p_result;
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<arguments>(this);
 	}
@@ -2560,7 +2552,7 @@ class arguments : public parser
 		return os;
 	}
 
-	virtual const parser * get_named(const std::string & n) const override
+	const parser * get_named(const std::string & n) const override
 	{
 		for (auto & p : parsers)
 		{
@@ -2918,14 +2910,14 @@ class exe_name : public composable_parser<exe_name>
 	std::string name() const;
 	parser_result set(std::string const & newName);
 
-	virtual parse_result parse(detail::token_iterator const & tokens,
+	parse_result parse(detail::token_iterator const & tokens,
 		const option_style &) const override
 	{
 		return parse_result::ok(
 			detail::parse_state(parser_result_type::no_match, tokens));
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<exe_name>(this);
 	}
@@ -3099,7 +3091,7 @@ class group : public arguments
 		return m_cardinality;
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<group>(this);
 	}
@@ -3369,7 +3361,7 @@ class cli : protected arguments
 	using arguments::parse;
 	using arguments::get_named;
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return std::unique_ptr<parser>(new cli(*this));
 	}
@@ -3377,8 +3369,7 @@ class cli : protected arguments
 	protected:
 	mutable exe_name m_exeName;
 
-	virtual std::string get_usage_text(
-		const option_style & style) const override
+	std::string get_usage_text(const option_style & style) const override
 	{
 		if (!m_exeName.name().empty())
 			return m_exeName.name() + " " + arguments::get_usage_text(style);
@@ -3653,31 +3644,27 @@ class literal : public parser
 	literal & help(const std::string & help_description_text);
 	literal & operator()(std::string const & help_description_text);
 
-	virtual detail::parser_cardinality cardinality() const override
-	{
-		return { 1, 1 };
-	}
+	detail::parser_cardinality cardinality() const override { return { 1, 1 }; }
 
 
-	virtual std::string get_usage_text(const option_style &) const override
+	std::string get_usage_text(const option_style &) const override
 	{
 		return name;
 	}
 
-	virtual std::string get_description_text(
-		const option_style &) const override
+	std::string get_description_text(const option_style &) const override
 	{
 		return description;
 	}
 
-	virtual help_text get_help_text(const option_style &) const override
+	help_text get_help_text(const option_style &) const override
 	{
 		return { { name, description } };
 	}
 
 	using parser::parse;
 
-	virtual parse_result parse(detail::token_iterator const & tokens,
+	parse_result parse(detail::token_iterator const & tokens,
 		const option_style &) const override
 	{
 		auto validationResult = validate();
@@ -3698,7 +3685,7 @@ class literal : public parser
 		}
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<literal>(this);
 	}
@@ -3821,19 +3808,18 @@ class command : public group
 
 	command & brief_help(bool brief = true);
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<command>(this);
 	}
 
-	virtual std::string get_usage_text(
-		const option_style & style) const override
+	std::string get_usage_text(const option_style & style) const override
 	{
 		return parsers[0]->get_usage_text(style) + " "
 			+ parsers[1]->get_usage_text(style);
 	}
 
-	virtual help_text get_help_text(const option_style & style) const override
+	help_text get_help_text(const option_style & style) const override
 	{
 		if (expanded_help_details)
 		{
@@ -3853,7 +3839,7 @@ class command : public group
 	protected:
 	bool expanded_help_details = true;
 
-	virtual void print_help_text_details(
+	void print_help_text_details(
 		printer & p, const option_style & style) const override
 	{
 		p.heading("OPTIONS, ARGUMENTS:");
@@ -4059,8 +4045,7 @@ class opt : public bound_parser<opt>
 	opt & operator[](std::string const & opt_name);
 
 
-	virtual std::string get_usage_text(
-		const option_style & style) const override
+	std::string get_usage_text(const option_style & style) const override
 	{
 		std::string usage;
 		for (std::size_t o = 0; o < opt_names.size(); ++o)
@@ -4072,7 +4057,7 @@ class opt : public bound_parser<opt>
 		return usage;
 	}
 
-	virtual help_text get_help_text(const option_style & style) const override
+	help_text get_help_text(const option_style & style) const override
 	{
 		std::string text;
 		for (auto const & opt_name : opt_names)
@@ -4084,7 +4069,7 @@ class opt : public bound_parser<opt>
 		return { { text, m_description } };
 	}
 
-	virtual bool is_named(const std::string & n) const override
+	bool is_named(const std::string & n) const override
 	{
 		if (bound_parser::is_named(n)) return true;
 		for (auto & name : opt_names)
@@ -4381,13 +4366,12 @@ class help : public opt
 
 	help & description(const std::string & text);
 
-	virtual std::string get_description_text(
-		const option_style &) const override
+	std::string get_description_text(const option_style &) const override
 	{
 		return description_text;
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<help>(this);
 	}

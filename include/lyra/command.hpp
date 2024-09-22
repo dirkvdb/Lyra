@@ -70,19 +70,18 @@ class command : public group
 	command & brief_help(bool brief = true);
 
 	// Internal.
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<command>(this);
 	}
 
-	virtual std::string get_usage_text(
-		const option_style & style) const override
+	std::string get_usage_text(const option_style & style) const override
 	{
 		return parsers[0]->get_usage_text(style) + " "
 			+ parsers[1]->get_usage_text(style);
 	}
 
-	virtual help_text get_help_text(const option_style & style) const override
+	help_text get_help_text(const option_style & style) const override
 	{
 		if (expanded_help_details)
 		{
@@ -102,7 +101,7 @@ class command : public group
 	protected:
 	bool expanded_help_details = true;
 
-	virtual void print_help_text_details(
+	void print_help_text_details(
 		printer & p, const option_style & style) const override
 	{
 		// This avoid printing out the "internal" group brackets "{}" for the

@@ -79,7 +79,7 @@ class group : public arguments
 		return m_cardinality;
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<group>(this);
 	}

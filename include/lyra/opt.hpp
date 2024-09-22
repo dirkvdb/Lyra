@@ -89,8 +89,7 @@ class opt : public bound_parser<opt>
 
 	// Internal..
 
-	virtual std::string get_usage_text(
-		const option_style & style) const override
+	std::string get_usage_text(const option_style & style) const override
 	{
 		std::string usage;
 		for (std::size_t o = 0; o < opt_names.size(); ++o)
@@ -102,7 +101,7 @@ class opt : public bound_parser<opt>
 		return usage;
 	}
 
-	virtual help_text get_help_text(const option_style & style) const override
+	help_text get_help_text(const option_style & style) const override
 	{
 		std::string text;
 		for (auto const & opt_name : opt_names)
@@ -114,7 +113,7 @@ class opt : public bound_parser<opt>
 		return { { text, m_description } };
 	}
 
-	virtual bool is_named(const std::string & n) const override
+	bool is_named(const std::string & n) const override
 	{
 		if (bound_parser::is_named(n)) return true;
 		for (auto & name : opt_names)

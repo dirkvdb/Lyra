@@ -380,20 +380,17 @@ class bound_parser : public composable_parser<Derived>
 	template <typename T, std::size_t N>
 	Derived & choices(const T (&choice_values)[N]);
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<Derived>(this);
 	}
 
-	virtual bool is_named(const std::string & n) const override
-	{
-		return n == m_hint;
-	}
-	virtual std::size_t get_value_count() const override
+	bool is_named(const std::string & n) const override { return n == m_hint; }
+	std::size_t get_value_count() const override
 	{
 		return m_ref->get_value_count();
 	}
-	virtual std::string get_value(std::size_t i) const override
+	std::string get_value(std::size_t i) const override
 	{
 		return m_ref->get_value(i);
 	}

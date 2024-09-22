@@ -77,19 +77,19 @@ class ostream_printer : public printer
 	explicit ostream_printer(std::ostream & os_)
 		: os(os_)
 	{}
-	virtual printer & heading(const std::string & txt) override
+	printer & heading(const std::string & txt) override
 	{
 		os << txt << "\n";
 		return *this;
 	}
-	virtual printer & paragraph(
+	printer & paragraph(
 		const std::string & txt, std::size_t indent = 0) override
 	{
 		const std::string indent_str(indent, ' ');
 		os << indent_str << txt << "\n\n";
 		return *this;
 	}
-	virtual printer & option(const std::string & opt,
+	printer & option(const std::string & opt,
 		const std::string & description,
 		std::size_t indent = 0) override
 	{

@@ -45,14 +45,14 @@ class exe_name : public composable_parser<exe_name>
 
 	// The exe name is not parsed out of the normal tokens, but is handled
 	// specially
-	virtual parse_result parse(detail::token_iterator const & tokens,
+	parse_result parse(detail::token_iterator const & tokens,
 		const option_style &) const override
 	{
 		return parse_result::ok(
 			detail::parse_state(parser_result_type::no_match, tokens));
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<exe_name>(this);
 	}

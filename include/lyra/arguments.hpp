@@ -105,8 +105,7 @@ class arguments : public parser
 
 	// Internal..
 
-	virtual std::string get_usage_text(
-		const option_style & style) const override
+	std::string get_usage_text(const option_style & style) const override
 	{
 		std::string text;
 		for (auto const & p : parsers)
@@ -128,8 +127,7 @@ class arguments : public parser
 		return text;
 	}
 
-	virtual std::string get_description_text(
-		const option_style & style) const override
+	std::string get_description_text(const option_style & style) const override
 	{
 		std::string text;
 		for (auto const & p : parsers)
@@ -146,7 +144,7 @@ class arguments : public parser
 	}
 
 	// Return a container of the individual help text for the composed parsers.
-	virtual help_text get_help_text(const option_style & style) const override
+	help_text get_help_text(const option_style & style) const override
 	{
 		help_text text;
 		for (auto const & p : parsers)
@@ -157,12 +155,9 @@ class arguments : public parser
 		return text;
 	}
 
-	virtual detail::parser_cardinality cardinality() const override
-	{
-		return { 0, 0 };
-	}
+	detail::parser_cardinality cardinality() const override { return { 0, 0 }; }
 
-	virtual result validate() const override
+	result validate() const override
 	{
 		for (auto const & p : parsers)
 		{
@@ -362,7 +357,7 @@ class arguments : public parser
 		return p_result;
 	}
 
-	virtual std::unique_ptr<parser> clone() const override
+	std::unique_ptr<parser> clone() const override
 	{
 		return make_clone<arguments>(this);
 	}
@@ -375,7 +370,7 @@ class arguments : public parser
 		return os;
 	}
 
-	virtual const parser * get_named(const std::string & n) const override
+	const parser * get_named(const std::string & n) const override
 	{
 		for (auto & p : parsers)
 		{

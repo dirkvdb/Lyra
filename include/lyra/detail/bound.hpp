@@ -65,8 +65,8 @@ struct BoundValueRef : BoundValueRefBase
 		return parse_string(arg, m_ref);
 	}
 
-	virtual size_t get_value_count() const override { return 1; }
-	virtual std::string get_value(size_t i) const override
+	size_t get_value_count() const override { return 1; }
+	std::string get_value(size_t i) const override
 	{
 		if (i == 0)
 		{
@@ -97,8 +97,8 @@ struct BoundValueRef<std::vector<T>> : BoundValueRefBase
 		return str_result;
 	}
 
-	virtual size_t get_value_count() const override { return m_ref.size(); }
-	virtual std::string get_value(size_t i) const override
+	size_t get_value_count() const override { return m_ref.size(); }
+	std::string get_value(size_t i) const override
 	{
 		if (i < m_ref.size())
 		{
@@ -124,8 +124,8 @@ struct BoundFlagRef : BoundFlagRefBase
 		return parser_result::ok(parser_result_type::matched);
 	}
 
-	virtual size_t get_value_count() const override { return 1; }
-	virtual std::string get_value(size_t i) const override
+	size_t get_value_count() const override { return 1; }
+	std::string get_value(size_t i) const override
 	{
 		if (i == 0) return m_ref ? "true" : "false";
 		return "";
