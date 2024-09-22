@@ -1811,6 +1811,13 @@ class bound_parser : public composable_parser<Derived>
 			m_cardinality = { 0, 0 };
 		else
 			m_cardinality = { 0, 1 };
+		if (!m_ref->isFlag() && !m_ref->isContainer()
+			&& m_ref->get_value_count() == 1)
+		{
+			auto value_zero = m_ref->get_value(0);
+			if (!value_zero.empty())
+				m_description = "[default: " + value_zero + "]";
+		}
 	}
 
 	public:
@@ -1950,7 +1957,8 @@ end::reference[] */
 template <typename Derived>
 Derived & bound_parser<Derived>::help(const std::string & help_description_text)
 {
-	m_description = help_description_text;
+	m_description = help_description_text
+		+ (m_description.empty() ? "" : (" " + m_description));
 	return static_cast<Derived &>(*this);
 }
 template <typename Derived>

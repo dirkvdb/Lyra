@@ -292,6 +292,8 @@ Changes:
 * *New*: Implements a new `brief_help` mode for a `command` that only prints
 	out the command name and description.
 	-- _René Ferdinand Rivera Morell_
+* *New*: Adds printing default/initial value for options in help output.
+	-- _René Ferdinand Rivera Morell_
 
 === 1.6.1
 
