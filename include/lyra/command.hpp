@@ -12,6 +12,7 @@
 #include "lyra/parser.hpp"
 #include "lyra/printer.hpp"
 
+#include <cstddef>
 #include <functional>
 #include <memory>
 #include <string>
@@ -68,6 +69,20 @@ class command : public group
 
 	// Settings.
 	command & brief_help(bool brief = true);
+	command & optional() { return static_cast<command &>(group::optional()); }
+	command & required(std::size_t n = 1)
+	{
+		return static_cast<command &>(group::required(n));
+	}
+	command & cardinality(std::size_t n)
+	{
+		return static_cast<command &>(group::cardinality(n));
+	}
+	command & cardinality(std::size_t n, std::size_t m)
+	{
+		return static_cast<command &>(group::cardinality(n, m));
+	}
+	using group::cardinality;
 
 	// Internal.
 	std::unique_ptr<parser> clone() const override

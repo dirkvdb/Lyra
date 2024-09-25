@@ -3763,6 +3763,7 @@ inline literal & literal::operator()(std::string const & help_description_text)
 
 #endif
 
+#include <cstddef>
 #include <functional>
 #include <memory>
 #include <string>
@@ -3815,6 +3816,20 @@ class command : public group
 	command & operator|=(P const & p);
 
 	command & brief_help(bool brief = true);
+	command & optional() { return static_cast<command &>(group::optional()); }
+	command & required(std::size_t n = 1)
+	{
+		return static_cast<command &>(group::required(n));
+	}
+	command & cardinality(std::size_t n)
+	{
+		return static_cast<command &>(group::cardinality(n));
+	}
+	command & cardinality(std::size_t n, std::size_t m)
+	{
+		return static_cast<command &>(group::cardinality(n, m));
+	}
+	using group::cardinality;
 
 	std::unique_ptr<parser> clone() const override
 	{
