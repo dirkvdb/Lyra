@@ -82,7 +82,6 @@ class command : public group
 	{
 		return static_cast<command &>(group::cardinality(n, m));
 	}
-	using group::cardinality;
 
 	// Internal.
 	std::unique_ptr<parser> clone() const override

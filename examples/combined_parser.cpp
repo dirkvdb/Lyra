@@ -52,7 +52,7 @@ int main(int argc, const char** argv)
 	{
 		std::cerr << result.message() << "\n\n";
 	}
-	if (show_help or !result)
+	if (show_help || !result)
 	{
 		std::cout << parser << "\n";
 	}
