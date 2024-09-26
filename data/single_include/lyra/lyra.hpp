@@ -3834,6 +3834,10 @@ class command : public group
 	{
 		return make_clone<command>(this);
 	}
+	detail::parser_cardinality cardinality() const override
+	{
+		return group::cardinality();
+	}
 
 	std::string get_usage_text(const option_style & style) const override
 	{
